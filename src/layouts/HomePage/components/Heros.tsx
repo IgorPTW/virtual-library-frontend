@@ -14,7 +14,7 @@ export const Heros = () => {
                                 Whether it is to learn a new skill or grow withing one,
                                 we will be able to provide the top content for you!
                             </p>
-                            <a className='btn main-color btn-lg text-white' href='#'>Sign upz</a>
+                            <a className='btn main-color btn-lg text-white' href='#'>Sign up</a>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@ export const Heros = () => {
                                 Try to check in daily as our collection is always changing!
                                 We work nonstop to provide the most accurate book selection possible
                                 for our Love 2 Read students! We are diligent about our book selection
-                                and our book selection and our books are always going to be our 
+                                and our books are always going to be our 
                                 top priority.
                             </p>
                         </div>
@@ -56,7 +56,14 @@ export const Heros = () => {
                     <div className='m-2'>
                         <div className='col-image-right'></div>
                         <div className='mt-2'>
-
+                            <h1>Our collection is always changing!</h1>
+                            <p className='lead'>
+                                Try to check in daily as our collection is always changing!
+                                We work nonstop to provide the most accurate book selection possible
+                                for our Love 2 Read students! We are diligent about our book selection
+                                and our books are always going to be our
+                                top priority.
+                            </p>
                         </div>
                     </div> 
                 </div>
