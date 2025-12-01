@@ -3,6 +3,7 @@ import BookModel from "../../models/BookModel";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { StarsReview } from "../Utils/StarsReview";
 import { CheckoutAndReviewBox } from "./CheckoutAndReviewBox";
+import ReviewModel from "../../models/ReviewModel";
 
 export const BookCheckoutPage = () => {
 
@@ -10,6 +11,11 @@ export const BookCheckoutPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState(null);
 
+    // Review state
+    const [review, setReviews] = useState<ReviewModel[]>([]);
+    const[totalStars, setTotalStars] = useState(0);
+    const[isLoadingReview, setIsLoadingReview] = useState(true);
+    
     const bookId = (window.location.pathname).split('/')[2];
 
     useEffect(() => {
@@ -43,6 +49,12 @@ export const BookCheckoutPage = () => {
             setHttpError(error.message)
         })
     }, []);
+
+    useEffect(() => {
+        const fetchBookReviews = async () => {
+            const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}`;
+        }
+    });
 
     if (isLoading) {
         return (
