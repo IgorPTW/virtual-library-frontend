@@ -68,6 +68,12 @@ export const App = () => {
           <Route path='/checkout/:bookId'>
             <BookCheckoutPage />
           </Route>
+
+          <Route path='/login' render={() => <LoginPage />} />
+          <SecureRoute path='/shelf' component={ShelfPage} />
+          <SecureRoute path='/messages' component={MessagesPage} />
+          <SecureRoute path='/admin' component={ManageLibraryPage} />
+          
         </Switch>
       </div>
       <Footer />
