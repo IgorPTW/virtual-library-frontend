@@ -1,0 +1,106 @@
+import {useEffect, useState} from "react";
+import BookModel from "../../../models/BookModel";
+import { useAuth0 } from "@auth0/auth0-react";
+
+export const ChangeQuantityOfBook: React.FC<{ book: BookModel, deleteBook: any}> = (props, key) => {
+
+    const { getAccessTokenSilently } = useAuth0();
+    const [quantity, setQuantity] = useState<number>(0);
+    const [remaining, setRemaining] = useState<number>(0);
+
+    useEffect(() => {
+        const fetchBookInState = () => {
+            props.book.copies ? setQuantity(props.book.copies) : setQuantity(0);
+            props.book.copiesAvailable ? setRemaining(props.book.copiesAvailable) : setRemaining(0);
+        };
+        fetchBookInState();
+    }, []);
+
+    async function increaseQuantity() {
+        const url = `http://localhost:8080/api/admin/secure/increase/book/quantity?bookId=${props.book?.id}`;
+        const accessToken = await getAccessTokenSilently();
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const quantityUpdateResponse = await fetch(url, requestOptions);
+        if(!quantityUpdateResponse.ok) {
+            throw new Error('Something went wrong!');
+        }
+        setQuantity(quantity + 1);
+        setRemaining(remaining + 1);
+    }
+
+    async function decreaseQuantity() {
+        const url = `http://localhost:8080/api/admin/secure/decrease/book/quantity?bookId=${props.book?.id}`;
+        const accessToken = await getAccessTokenSilently();
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/jsom'
+            }
+        };
+
+        const quantityUpdateResponse = await fetch(url, requestOptions);
+        if(!quantityUpdateResponse.ok) {
+            throw new Error('Something went wrong!');
+        }
+        setQuantity(quantity - 1);
+        setRemaining(remaining - 1);
+    }
+
+    async function deleteBook() {
+        const url = `http://localhost:8080/api/admin/secure/delete/book?bookId=${props.book?.id}`;
+        const accessToken = await getAccessTokenSilently();
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const updateResponse = await fetch(url, requestOptions);
+        if(!updateResponse.ok) {
+            throw new Error('Something went wrong!');
+        }
+        props.deleteBook();
+    }
+
+    return (
+        <div className='card mt-3 shadow p-3 mb-3 bg-body rounded'>
+            <div className='row g-0'>
+                <div className='col-md-2'>
+                    <div className='d-none d-lg-block'>
+                        {props.book.img ?
+                            <img src={props.book.img} width='123' height='196' alt='Book' />
+                            :
+                            <img src={require('./../../../Images/BookImages/book-luv2code-1000.png')}
+                                width='123' height='196' alt='Book' />
+                        }
+                    </div>
+                    <div className='d-lg-none d-flex justify-content-center align-items-center'>
+                        {props.book.img ?
+                            <img src={props.book.img} width='123' height='196' alt='Book' />
+                            :
+                            <img src={require('./../../../Images/BooksImages/book-luv2code-1000.png')} 
+                                width='123' height='196' alt='Book' />
+                        }
+                    </div>
+                </div>
+                <div className='col-md-6'>
+                    <div className='card-body'>
+
+                    </div>
+                </div>           
+
+
+            </div>
+        </div>
+    );
+}
