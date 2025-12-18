@@ -95,11 +95,26 @@ export const ChangeQuantityOfBook: React.FC<{ book: BookModel, deleteBook: any}>
                 </div>
                 <div className='col-md-6'>
                     <div className='card-body'>
-
+                        <h5 className='card-title'>{props.book.author}</h5>
+                        <h4>{props.book.title}</h4>
+                        <p className='card-text'> {props.book.description} </p>
                     </div>
                 </div>           
-
-
+                <div className='mt-3 col-md-4'>
+                    <div className='d-flex justify-content-center align-items-center'>
+                        <p>Total Quantity: <b>{quantity}</b></p>
+                    </div>
+                    <div className='d-flex justify-content-center align-items-center'>
+                        <p>Books Remaining: <b>{remaining}</b></p>
+                    </div>
+                </div>
+                <div className='mt-3 col-md-1'>
+                    <div className='d-flex justify-content-start'>
+                        <button className='m-1 btn btn-md btn-danger' onClick={deleteBook}>Delete</button>
+                    </div>
+                </div>  
+                <button className='m1 btn btn-md main-color text-white' onClick={increaseQuantity}>Add Quantity</button>
+                <button className='m1 btn btn-md btn-warning' onClick={decreaseQuantity}>Decrease Quantity</button>
             </div>
         </div>
     );
