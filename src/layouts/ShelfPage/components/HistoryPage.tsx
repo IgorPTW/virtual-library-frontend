@@ -12,7 +12,7 @@ export const HistoryPage = () => {
     const [httpError, setHttpError] = useState(null);
 
     // Histories
-    const[histories, setHistories] = useState<HistoryModel[]>([]);
+    const [histories, setHistories] = useState<HistoryModel[]>([]);
 
     // Pagination
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,7 @@ export const HistoryPage = () => {
 
     useEffect(() => {
         const fetchUserHistory = async () => {
-            if(isAuthenticated) {
+            if (isAuthenticated) {
                 const url = `http://localhost:8080/api/histories/search/findBooksByUserEmail?userEmail=${user?.email}&page=${currentPage - 1}&size=5`;
                 const requestOptions = {
                     method: 'GET',
@@ -29,7 +29,7 @@ export const HistoryPage = () => {
                     }
                 };
                 const historyResponse = await fetch(url, requestOptions);
-                if(!historyResponse.ok) {
+                if (!historyResponse.ok) {
                     throw new Error('Something went wrong!');
                 }
                 const historyResponseJson = await historyResponse.json();
@@ -46,13 +46,13 @@ export const HistoryPage = () => {
         })
     }, [isAuthenticated, user, currentPage]);
 
-    if(isLoadingHistory) {
+    if (isLoadingHistory) {
         return (
-            <SpinnerLoading/>
+            <SpinnerLoading />
         )
     }
 
-    if(httpError) {
+    if (httpError) {
         return (
             <div className='container m-5'>
                 <p>{httpError}</p>
@@ -62,28 +62,59 @@ export const HistoryPage = () => {
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-    return(
+    return (
         <div className='mt-2'>
             {histories.length > 0 ?
-            <>
-                <h5>Recent History:</h5>
+                <>
+                    <h5>Recent History:</h5>
 
-                {histories.map(history => (
-                    <div key={history.id}>
-                        <div className='card mt-3 shadow p-3 mb-3 bg-body rounded'>
-                            <div className='row g-0'>
-                                <div className='col-md-2'>
-
+                    {histories.map(history => (
+                        <div key={history.id}>
+                            <div className='card mt-3 shadow p-3 mb-3 bg-body rounded'>
+                                <div className='row g-0'>
+                                    <div className='col-md-2'>
+                                        <div className='d-none d-lg-block'>
+                                            {history.img ?
+                                                <img src={history.img} width='123' height='196' alt='Book' />
+                                                :
+                                                <img src={require('./../../../Images/BooksImages/book-luv2code-1000.png')}
+                                                    width='123' height='196' alt='Default' />
+                                            }
+                                        </div>
+                                        <div className='d-lg-none d-flex justify-content-center align-items-center'>
+                                            {history.img ?
+                                                <img src={history.img} width='123' height='196' alt='Book' />
+                                                :
+                                                <img src={require('./../../../Images/BooksImages/book-luv2code-1000.png')}
+                                                    width='123' height='196' alt='Default' />
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className='col'>
+                                        <div className='card-body'>
+                                            <h5 className='card-title'>{history.author}</h5>
+                                            <h4>{history.title}</h4>
+                                            <p className='card-text'>{history.description}</p>
+                                            <hr />
+                                            <p className='card-text'> Checked out on: {history.checkoutDate}</p>
+                                            <p className='card-text'> Returned on: {history.returnedDate}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <hr />
                         </div>
-                    </div>
-                ))}
-            </>
-            :
-            <>
-            </>
+                    ))}
+                </>
+                :
+                <>
+                    <h3 className='mt-3'>Currently no history: </h3>
+                    <Link className='btn btn-primary' to={'search'}>
+                        Search for new book
+                    </Link>
+                </>
             }
+            {totalPages > 1 && <Pagination currentPage={currentPage} totalPages={totalPages} paginate={paginate}/>}
         </div>
     );
 }
