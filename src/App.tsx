@@ -41,11 +41,7 @@ const SecureRoute = ({ component, path, ...args }: {component: React.ComponentTy
   <Route path={path} component={withAuthenticationRequired(component)} {...args} />
 );
 
-
-
 export const App = () => {
-
-
 
   return (
     <div className='d-flex flex-column min-vh-100'>

@@ -5,9 +5,8 @@ import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { StarsReview } from "../Utils/StarsReview";
 import { CheckoutAndReviewBox } from "./CheckoutAndReviewBox";
 import { LatestReviews } from "./LatestReviews";
-import ReviewRequestModel from "/../../models/ReviewRquestModel";
+import ReviewRequestModel from "../../models/ReviewRequestModel";
 import { useAuth0 } from "@auth0/auth0-react";
-import { get } from "http";
 
 export const BookCheckoutPage = () => {
 
@@ -115,10 +114,8 @@ export const BookCheckoutPage = () => {
     useEffect(() => {
         const fetchUserReviewBook = async () => {
             if (isAuthenticated) {
-                //const url = `http://localhost:8080/api/reviews/secure/user/book/?bookId=${bookId}`;
                 const accessToken = await getAccessTokenSilently();
                 const url = `http://localhost:8080/api/reviews/secure/user/book?bookId=${bookId}`;
-
                 const requestOptions = {
                     method: 'GET',
                     headers: {
@@ -150,7 +147,7 @@ export const BookCheckoutPage = () => {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
-                        'ContentType': 'application/json'
+                        'Content-Type': 'application/json'
                     }
                 };
                 const currentLoansCountResponse = await fetch(url, requestOptions);
@@ -171,10 +168,8 @@ export const BookCheckoutPage = () => {
     useEffect(() => {
         const fetchUserCheckedOutBook = async () => {
             if(isAuthenticated) {
-                //const url = `http://localhost:8080/api/books/secure/ischeckedout/byuser/?bookId=${bookId}`;
                 const accessToken = await getAccessTokenSilently();
                 const url = `http://localhost:8080/api/books/secure/ischeckedout/byuser?bookId=${bookId}`
-                
                 const requestOptions = {
                     method: 'GET',
                     headers: {
@@ -214,10 +209,8 @@ export const BookCheckoutPage = () => {
     }
 
     async function checkoutBook() {
-        // const url = `http://localhost:8080/api/books/secure/checkout/?bookId=${book?.id}`;
         const accessToken = await getAccessTokenSilently();
         const url = `http://localhost:8080/api/books/secure/checkout?bookId=${book?.id}`;
-
         const requestOptions = {
             method: 'PUT',
             headers: {
@@ -301,7 +294,7 @@ export const BookCheckoutPage = () => {
                     </div>
                 </div>
                 <CheckoutAndReviewBox book={book} mobile={true} currentLoansCount={currentLoansCount} 
-                    isAutenticated={isAuthenticated} isCheckedOut={isCheckedOut}
+                    isAuthenticated={isAuthenticated} isCheckedOut={isCheckedOut}
                     checkoutBook={checkoutBook} isReviewLeft={isReviewLeft} submitReview={submitReview} />
                 <hr />
                 <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
