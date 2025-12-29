@@ -52,7 +52,7 @@ export const ManageLibraryPage = () => {
     }
 
 
-    return ( // STOP READ HERE!
+    return (
         <div className='container'>
             <div className='mt-5'>
                 <h3>Manage Library</h3>
