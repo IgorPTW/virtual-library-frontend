@@ -2,7 +2,7 @@ import { useState } from "react";
 import MessageModel from "../../../models/MessageModel";
 
 export const AdminMessage: React.FC<{ message: MessageModel, 
-    submitResponseToQuestion: any}> = (props, key) => {
+    submitResponseToQuestion: any}> = (props) => {
 
     const [displayWarning, setDisplayWarning] = useState(false);
     const [response, setResponse] = useState('');
@@ -17,7 +17,7 @@ export const AdminMessage: React.FC<{ message: MessageModel,
     }
 
     return (
-        <div key={props.message.id}>
+        <div>
             <div className='card mt-2 shadow p-3 bg-body rounded'>
                 <h5>Case #{props.message.id} : {props.message.title}</h5>
                 <h6>{props.message.userEmail}</h6>

@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import BookModel from "../../../models/BookModel";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export const ChangeQuantityOfBook: React.FC<{ book: BookModel, deleteBook: any}> = (props, key) => {
+export const ChangeQuantityOfBook: React.FC<{ book: BookModel, deleteBook: any}> = (props) => {
 
     const { getAccessTokenSilently } = useAuth0();
     const [quantity, setQuantity] = useState<number>(0);
@@ -80,7 +80,7 @@ export const ChangeQuantityOfBook: React.FC<{ book: BookModel, deleteBook: any}>
                         {props.book.img ?
                             <img src={props.book.img} width='123' height='196' alt='Book' />
                             :
-                            <img src={require('./../../../Images/BookImages/book-luv2code-1000.png')}
+                            <img src={require('./../../../Images/BooksImages/book-luv2code-1000.png')}
                                 width='123' height='196' alt='Book' />
                         }
                     </div>
