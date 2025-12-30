@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 import BookModel from "../../models/BookModel";
 import { LeaveAReview } from "../Utils/LeaveAReview";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const CheckoutAndReviewBox: React.FC<{ book: BookModel | undefined, mobile: boolean,
     currentLoansCount: number, isAuthenticated: any, isCheckedOut: boolean,
     checkoutBook: any, isReviewLeft: boolean, submitReview: any }> = (props) => {
+    
+    const {loginWithRedirect} = useAuth0();
+
+    const handleLogin = () => {
+        loginWithRedirect();
+        window.location.assign("/");
+    }
 
     function buttonRender() {
         if(props.isAuthenticated) {
@@ -16,7 +24,8 @@ export const CheckoutAndReviewBox: React.FC<{ book: BookModel | undefined, mobil
                 return (<p className='text-danger'>Too many books checked out.</p>)
             }
         }
-        return (<Link to={'/login'} className='btn btn-success btn-lg'>Sign in</Link>)
+        //return (<Link to={'/login'} className='btn btn-success btn-lg'>Sign in</Link>)
+        return(<button className='btn btn-success btn-lg' onClick={handleLogin}>Sign in</button>)
     }
 
     function reviewRender() {
