@@ -52,7 +52,7 @@ export const PostNewMessage = () => {
                         </div>
                     }
                     {displaySuccess &&
-                        <div className='alert alert-sucess' role='alert'>
+                        <div className='alert alert-success' role='alert'>
                             Question added successfully
                         </div>
                     }
